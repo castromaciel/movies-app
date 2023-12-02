@@ -2,15 +2,22 @@ import { FC } from 'react'
 import { Image, StyleSheet, View } from 'react-native'
 import { Movie } from '../../interfaces/movies.interface'
 
-interface MoviePosterProps extends Pick<Movie, 'title' | 'poster_path'> { }
+interface MoviePosterProps extends Pick<Movie, 'poster_path'> {
+  height?: number
+  width?: number
+}
 
 const MoviePoster: FC<MoviePosterProps> = ({
-  title, poster_path
+  poster_path, height = 420, width = 300
 }) => {
   const uri = `https://image.tmdb.org/t/p/w500${poster_path}`
 
   return (
-    <View style={styles.cardContainer}>
+    <View style={{
+      width,
+      height,
+      marginHorizontal: 8
+    }}>
       <View style={styles.imageContaiener}>
         <Image source={{ uri }} style={styles.image} />
       </View>
@@ -19,10 +26,6 @@ const MoviePoster: FC<MoviePosterProps> = ({
 }
 
 const styles = StyleSheet.create({
-  cardContainer: {
-    width: 300,
-    height: 420,
-  },
   imageContaiener: {
     borderRadius: 18,
     shadowColor: "#000",
