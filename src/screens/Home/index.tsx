@@ -12,7 +12,13 @@ const { width: WINDOW_WITH } = Dimensions.get('window')
 interface HomeProps extends StackScreenProps<Screens, 'Home'> { }
 
 const Home: FC<HomeProps> = ({ navigation }) => {
-  const { movies, isLoading } = useMovies()
+  const {
+    isLoading,
+    nowPlayingMovies,
+    popularMovies,
+    topRatedMovies,
+    upcomingMovies,
+  } = useMovies()
   const { top: paddingTop } = useSafeAreaInsets()
 
   if (isLoading) {
@@ -31,7 +37,7 @@ const Home: FC<HomeProps> = ({ navigation }) => {
           height: 450
         }}>
           <Carousel
-            data={movies}
+            data={nowPlayingMovies}
             renderItem={({ item }) => (
               <MoviePoster  {...item} />
             )}
@@ -43,9 +49,21 @@ const Home: FC<HomeProps> = ({ navigation }) => {
         </View>
 
         <HorizontalSlider
-          movies={movies}
+          movies={topRatedMovies}
+          sliderTitle='Top rated'
+        />
+
+
+        <HorizontalSlider
+          movies={upcomingMovies}
+          sliderTitle='Upcoming'
+        />
+
+        <HorizontalSlider
+          movies={popularMovies}
           sliderTitle='Only in cinemas'
         />
+
       </View>
     </ScrollView>
 

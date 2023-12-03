@@ -30,12 +30,12 @@ const styles = StyleSheet.create({
     borderRadius: 18,
     shadowColor: "#000",
     shadowOffset: {
-      width: 0,
-      height: 2,
+      width: 1,
+      height: 3,
     },
     shadowOpacity: 0.25,
     shadowRadius: 3.84,
-    elevation: 5,
+    elevation: 9,
     flex: 1
   },
   image: {
