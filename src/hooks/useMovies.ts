@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react"
 import { moviesDbApi } from "../api/moviesdb.api"
-import { Movie, MovieDBNowPlaying } from "../interfaces/movies.interface"
+import { Movie, MovieDBResponse } from "../interfaces/movies.interface"
 
 interface MoviesState {
   nowPlayingMovies: Movie[]
@@ -11,6 +11,7 @@ interface MoviesState {
 
 const useMovies = () => {
   const [isLoading, setIsLoading] = useState(true)
+  const [isError, setIsError] = useState(false)
   const [movies, setMovies] = useState<MoviesState>({} as MoviesState)
 
   const getMovies = async () => {
@@ -23,10 +24,10 @@ const useMovies = () => {
         upcomingMoviesRs,
         topRatedMoviesRs,
       ] = await Promise.all([
-        moviesDbApi.get<MovieDBNowPlaying>('now_playing'),
-        moviesDbApi.get<MovieDBNowPlaying>('popular'),
-        moviesDbApi.get<MovieDBNowPlaying>('upcoming'),
-        moviesDbApi.get<MovieDBNowPlaying>('top_rated'),
+        moviesDbApi.get<MovieDBResponse>('now_playing'),
+        moviesDbApi.get<MovieDBResponse>('popular'),
+        moviesDbApi.get<MovieDBResponse>('upcoming'),
+        moviesDbApi.get<MovieDBResponse>('top_rated'),
       ])
 
       setMovies((prevState) => ({
@@ -38,6 +39,7 @@ const useMovies = () => {
       }))
     } catch (error) {
       console.error(error)
+      setIsError(true)
     } finally {
       setIsLoading(false)
     }
@@ -49,6 +51,7 @@ const useMovies = () => {
 
   return {
     ...movies,
+    isError,
     isLoading
   }
 }

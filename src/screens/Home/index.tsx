@@ -13,6 +13,7 @@ interface HomeProps extends StackScreenProps<Screens, 'Home'> { }
 
 const Home: FC<HomeProps> = ({ navigation }) => {
   const {
+    isError,
     isLoading,
     nowPlayingMovies,
     popularMovies,
@@ -22,6 +23,14 @@ const Home: FC<HomeProps> = ({ navigation }) => {
   const { top: paddingTop } = useSafeAreaInsets()
 
   if (isLoading) {
+    return (
+      <View style={{ ...styles.center, paddingTop }}>
+        <ActivityIndicator color='red' size={100} />
+      </View>
+    )
+  }
+
+  if (isError) {
     return (
       <View style={{ ...styles.center, paddingTop }}>
         <ActivityIndicator color='red' size={100} />

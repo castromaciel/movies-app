@@ -1,9 +1,10 @@
 import { createStackNavigator } from '@react-navigation/stack';
+import { Movie } from '../interfaces/movies.interface';
 import { Detail, Home } from '../screens';
 
 export type Screens = {
   'Home': undefined,
-  'Detail': undefined,
+  'Detail': Movie,
 }
 
 const Stack = createStackNavigator<Screens>();
