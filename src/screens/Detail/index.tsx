@@ -1,6 +1,10 @@
 import { StackScreenProps } from '@react-navigation/stack'
 import { FC } from 'react'
 import { Dimensions, Image, ScrollView, StyleSheet, Text, View } from 'react-native'
+import { TouchableOpacity } from 'react-native-gesture-handler'
+import Icon from 'react-native-vector-icons/Ionicons'
+import MovieDetail from '../../components/MovieDetail'
+import useMovieDetail from '../../hooks/useMovieDetail'
 import { Screens } from '../../navigation'
 
 interface DetailProps extends StackScreenProps<Screens, 'Detail'> { }
@@ -10,10 +14,14 @@ const {
   height: WINDOW_HEIGHT
 } = Dimensions.get('window')
 
-const Detail: FC<DetailProps> = ({ route }) => {
-  const { title, poster_path, original_title } = route.params
+const Detail: FC<DetailProps> = ({ route, navigation }) => {
+  const { title, poster_path, original_title, id: movieId } = route.params
+
   const uri = `https://image.tmdb.org/t/p/w500${poster_path}`
 
+  const { isError, isLoading, movieInformation } = useMovieDetail({ movieId })
+
+  const handleBack = () => navigation.goBack()
   return (
     <ScrollView style={{ paddingTop: 0 }}>
       <View style={styles.imageContainer}>
@@ -28,6 +36,25 @@ const Detail: FC<DetailProps> = ({ route }) => {
       </View>
 
 
+      <View style={{ ...styles.marginContainer, marginTop: 0 }}>
+        <MovieDetail
+          {...movieInformation}
+          isError={isError}
+          isLoading={isLoading}
+        />
+      </View>
+
+      <View style={styles.backButton}>
+        <TouchableOpacity
+          onPress={handleBack}
+        >
+          <Icon
+            name='arrow-back-outline'
+            size={52}
+          />
+        </TouchableOpacity>
+
+      </View>
     </ScrollView>
   )
 }
@@ -67,6 +94,13 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 22,
     fontWeight: 'bold'
+  },
+  backButton: {
+    position: 'absolute',
+    zIndex: 3,
+    elevation: 3,
+    top: 24,
+    left: 4
   }
 })
 
