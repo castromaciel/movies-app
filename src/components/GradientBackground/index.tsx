@@ -1,5 +1,6 @@
 import { FC, ReactNode } from 'react'
 import { StyleSheet, View } from 'react-native'
+import LinearGradient from 'react-native-linear-gradient'
 
 interface GradientBackgroundProps {
   children: ReactNode | ReactNode[]
@@ -16,6 +17,20 @@ const GradientBackground: FC<GradientBackgroundProps> = ({
       ...styles,
       ...customStyles
     }}>
+      <LinearGradient
+        colors={['#084F6A', '#75CEDB', 'white']}
+        style={{
+          ...StyleSheet.absoluteFillObject
+        }}
+        start={{
+          x: 0.1,
+          y: 0.1,
+        }}
+        end={{
+          x: 0.65,
+          y: 0.75,
+        }}
+      />
       { children }
     </View>
   )
