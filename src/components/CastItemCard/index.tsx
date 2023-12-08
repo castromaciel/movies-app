@@ -9,7 +9,6 @@ const CastItemCard: FC<CastItemCardProps> = ({
 }) => {
   const uri = `https://image.tmdb.org/t/p/w500${profile_path}`
 
-  console.log(!!profile_path)
   return (
     <View style={styles.container}>
       {
