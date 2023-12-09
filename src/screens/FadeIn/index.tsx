@@ -23,8 +23,8 @@ const FadeIn: FC<FadeInProps> = () => {
         opacity
       }} />
 
-      <Button onPress={fadeIn} title='Fade in' color={'white'}/>
-      <Button onPress={fadeOut} title='Fade out' color={'white'}/>
+      <Button onPress={() => fadeIn} title='Fade in' color={'white'}/>
+      <Button onPress={() => fadeOut} title='Fade out' color={'white'}/>
     </View>
   )
 }
