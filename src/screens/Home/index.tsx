@@ -4,6 +4,7 @@ import { ActivityIndicator, Dimensions, ScrollView, StyleSheet, View } from 'rea
 import { useSafeAreaInsets } from 'react-native-safe-area-context'
 import Carousel from 'react-native-snap-carousel'
 import { GradientBackground, HorizontalSlider, MoviePoster } from '../../components'
+import useChangePosterColors from '../../hooks/useChangePosterColors'
 import useMovies from '../../hooks/useMovies'
 import { Screens } from '../../navigation'
 
@@ -20,7 +21,10 @@ const Home: FC<HomeProps> = ({ navigation }) => {
     topRatedMovies,
     upcomingMovies,
   } = useMovies()
+
   const { top: paddingTop } = useSafeAreaInsets()
+
+  const { getPosterColors } = useChangePosterColors({ nowPlayingMovies })
 
   if (isLoading) {
     return (
@@ -58,6 +62,7 @@ const Home: FC<HomeProps> = ({ navigation }) => {
               itemWidth={300}
               keyExtractor={({ id }) => `AllMovies${id}`}
               inactiveSlideOpacity={0.9}
+              onSnapToItem={getPosterColors}
             />
           </View>
 
